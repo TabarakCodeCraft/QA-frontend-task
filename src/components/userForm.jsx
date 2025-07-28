@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 import {
   Form,
   Input,
@@ -10,7 +10,7 @@ import {
   Col,
   Space,
   message,
-} from 'antd';
+} from "antd";
 import {
   UserOutlined,
   MailOutlined,
@@ -24,19 +24,19 @@ import {
   ContactsOutlined,
   PlusOutlined,
   ArrowLeftOutlined,
-  SaveOutlined
-} from '@ant-design/icons';
-import dayjs from 'dayjs';
-import apiService from '../services/api';
+  SaveOutlined,
+} from "@ant-design/icons";
+import dayjs from "dayjs";
+import apiService from "../services/api";
 
 const { Option } = Select;
 const { TextArea } = Input;
 
-const UserForm = ({ 
-  editingUser, 
-  onSuccess, 
-  onCancel, 
-  metadata = { roles: [], positions: [] } 
+const UserForm = ({
+  editingUser,
+  onSuccess,
+  onCancel,
+  metadata = { roles: [], positions: [] },
 }) => {
   const [form] = Form.useForm();
   const [loading, setLoading] = React.useState(false);
@@ -51,7 +51,7 @@ const UserForm = ({
       form.resetFields();
     }
   }, [editingUser, form]);
-//test
+
   const handleSubmit = async (values) => {
     setLoading(true);
     try {
@@ -70,7 +70,10 @@ const UserForm = ({
         hireDate: values.hireDate ? values.hireDate.format("YYYY-MM-DD") : null,
         emergencyContact: values.emergencyContact,
         skills: values.skills
-          ? values.skills.split(",").map((s) => s.trim()).filter((s) => s.length > 0)
+          ? values.skills
+              .split(",")
+              .map((s) => s.trim())
+              .filter((s) => s.length > 0)
           : [],
       };
 
@@ -87,13 +90,17 @@ const UserForm = ({
         );
         onSuccess();
       } else {
-        let errorMessage = response.message || `Failed to ${editingUser ? "update" : "create"} user`;
-        
+        let errorMessage =
+          response.message ||
+          `Failed to ${editingUser ? "update" : "create"} user`;
+
         if (response.data && response.data.details) {
-          const validationErrors = response.data.details.map(detail => detail.msg).join(', ');
+          const validationErrors = response.data.details
+            .map((detail) => detail.msg)
+            .join(", ");
           errorMessage = `Validation errors: ${validationErrors}`;
         }
-        
+
         message.error(errorMessage);
         console.error("API Error:", response);
       }
@@ -137,10 +144,12 @@ const UserForm = ({
               )}
             </div>
             <h1 className="text-2xl font-semibold text-gray-800">
-              {editingUser ? 'Edit User' : 'Create New User'}
+              {editingUser ? "Edit User" : "Create New User"}
             </h1>
             <p className="text-gray-600 text-base">
-              {editingUser ? 'Update user information' : 'Add a new user to the system'}
+              {editingUser
+                ? "Update user information"
+                : "Add a new user to the system"}
             </p>
           </div>
 
@@ -159,19 +168,22 @@ const UserForm = ({
                   <UserOutlined className="text-indigo-500 text-xl" />
                   <span>Basic Information</span>
                 </div>
-                
+
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
                     <Form.Item
                       name="name"
                       label="Full Name"
                       rules={[
-                        { required: true, message: 'Please enter full name' },
-                        { min: 2, message: 'Name must be at least 2 characters' }
+                        { required: true, message: "Please enter full name" },
+                        {
+                          min: 2,
+                          message: "Name must be at least 2 characters",
+                        },
                       ]}
                     >
-                      <Input 
-                        prefix={<UserOutlined className="text-gray-400" />} 
+                      <Input
+                        prefix={<UserOutlined className="text-gray-400" />}
                         placeholder="Enter full name"
                         className="rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                       />
@@ -182,12 +194,12 @@ const UserForm = ({
                       name="email"
                       label="Email Address"
                       rules={[
-                        { required: true, message: 'Please enter email' },
-                        { type: 'email', message: 'Please enter valid email' }
+                        { required: true, message: "Please enter email" },
+                        { type: "email", message: "Please enter valid email" },
                       ]}
                     >
-                      <Input 
-                        prefix={<MailOutlined className="text-gray-400" />} 
+                      <Input
+                        prefix={<MailOutlined className="text-gray-400" />}
                         placeholder="Enter email address"
                         className="rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                       />
@@ -201,12 +213,18 @@ const UserForm = ({
                       name="password"
                       label="Password"
                       rules={[
-                        { required: !editingUser, message: 'Please enter password' },
-                        { min: 6, message: 'Password must be at least 6 characters' }
+                        {
+                          required: !editingUser,
+                          message: "Please enter password",
+                        },
+                        {
+                          min: 6,
+                          message: "Password must be at least 6 characters",
+                        },
                       ]}
                     >
-                      <Input.Password 
-                        prefix={<LockOutlined className="text-gray-400" />} 
+                      <Input.Password
+                        prefix={<LockOutlined className="text-gray-400" />}
                         placeholder="Enter password"
                         className="rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                       />
@@ -216,19 +234,23 @@ const UserForm = ({
                     <Form.Item
                       name="role"
                       label="Role"
-                      rules={[{ required: true, message: 'Please select role' }]}
+                      rules={[
+                        { required: true, message: "Please select role" },
+                      ]}
                     >
-                      <Select 
+                      <Select
                         placeholder="Select role"
                         className="rounded-xl"
                         suffixIcon={<CrownOutlined className="text-gray-400" />}
                       >
                         {metadata.roles?.map((role) => (
                           <Option key={role} value={role}>
-                            <span style={{ 
-                              color: getRoleColor(role),
-                              fontWeight: 'bold'
-                            }}>
+                            <span
+                              style={{
+                                color: getRoleColor(role),
+                                fontWeight: "bold",
+                              }}
+                            >
                               {role.toUpperCase()}
                             </span>
                           </Option>
@@ -245,7 +267,7 @@ const UserForm = ({
                   <BankOutlined className="text-green-600 text-xl" />
                   <span>Professional Information</span>
                 </div>
-                
+
                 <Row gutter={16}>
                   <Col xs={24} md={8}>
                     <Form.Item
@@ -260,8 +282,8 @@ const UserForm = ({
                         },
                       ]}
                     >
-                      <InputNumber 
-                        placeholder="Age" 
+                      <InputNumber
+                        placeholder="Age"
                         className="w-full rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                         min={18}
                         max={100}
@@ -270,8 +292,8 @@ const UserForm = ({
                   </Col>
                   <Col xs={24} md={8}>
                     <Form.Item name="position" label="Position">
-                      <Select 
-                        placeholder="Select position" 
+                      <Select
+                        placeholder="Select position"
                         allowClear
                         className="rounded-xl"
                       >
@@ -285,8 +307,8 @@ const UserForm = ({
                   </Col>
                   <Col xs={24} md={8}>
                     <Form.Item name="department" label="Department">
-                      <Input 
-                        prefix={<BankOutlined className="text-gray-400" />} 
+                      <Input
+                        prefix={<BankOutlined className="text-gray-400" />}
                         placeholder="Department"
                         className="rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                       />
@@ -327,21 +349,22 @@ const UserForm = ({
                   <PhoneOutlined className="text-orange-600 text-xl" />
                   <span>Contact Information</span>
                 </div>
-                
+
                 <Row gutter={16}>
                   <Col xs={24} md={12}>
-                    <Form.Item 
-                      name="phoneNumber" 
+                    <Form.Item
+                      name="phoneNumber"
                       label="Phone Number"
                       rules={[
                         {
                           pattern: /^[\d\s\-\(\)\+]+$/,
-                          message: 'Invalid phone number format (e.g., +1234567890 or 123-456-7890)',
+                          message:
+                            "Invalid phone number format (e.g., +1234567890 or 123-456-7890)",
                         },
                       ]}
                     >
-                      <Input 
-                        prefix={<PhoneOutlined className="text-gray-400" />} 
+                      <Input
+                        prefix={<PhoneOutlined className="text-gray-400" />}
                         placeholder="+1234567890 or 123-456-7890"
                         className="rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                       />
@@ -349,10 +372,12 @@ const UserForm = ({
                   </Col>
                   <Col xs={24} md={12}>
                     <Form.Item name="hireDate" label="Hire Date">
-                      <DatePicker 
+                      <DatePicker
                         className="w-full rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                         placeholder="Select hire date"
-                        suffixIcon={<CalendarOutlined className="text-gray-400" />}
+                        suffixIcon={
+                          <CalendarOutlined className="text-gray-400" />
+                        }
                       />
                     </Form.Item>
                   </Col>
@@ -374,7 +399,7 @@ const UserForm = ({
                   <ContactsOutlined className="text-red-600 text-xl" />
                   <span>Emergency Contact</span>
                 </div>
-                
+
                 <Row gutter={16}>
                   <Col xs={24} md={8}>
                     <Form.Item
@@ -395,7 +420,8 @@ const UserForm = ({
                       rules={[
                         {
                           pattern: /^[\d\s\-\(\)\+]+$/,
-                          message: 'Invalid phone number format (e.g., +1234567890 or 123-456-7890)',
+                          message:
+                            "Invalid phone number format (e.g., +1234567890 or 123-456-7890)",
                         },
                       ]}
                     >
@@ -411,8 +437,8 @@ const UserForm = ({
                       name={["emergencyContact", "relationship"]}
                       label="Relationship"
                     >
-                      <Input 
-                        placeholder="Relationship" 
+                      <Input
+                        placeholder="Relationship"
                         className="rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                       />
                     </Form.Item>
@@ -426,10 +452,10 @@ const UserForm = ({
                   <span className="text-2xl">💼</span>
                   <span>Skills & Expertise</span>
                 </div>
-                
+
                 <Form.Item name="skills" label="Skills (comma-separated)">
-                  <TextArea 
-                    placeholder="JavaScript, React, Node.js, Python, SQL..." 
+                  <TextArea
+                    placeholder="JavaScript, React, Node.js, Python, SQL..."
                     rows={3}
                     className="rounded-xl border-gray-200/50 focus:border-indigo-500 focus:ring-indigo-500/20"
                   />
@@ -455,7 +481,7 @@ const UserForm = ({
                     icon={<SaveOutlined />}
                     className="rounded-xl h-12 px-8 bg-gradient-to-r from-indigo-500 to-purple-600 border-0 hover:from-indigo-600 hover:to-purple-700"
                   >
-                    {editingUser ? 'Update User' : 'Create User'}
+                    {editingUser ? "Update User" : "Create User"}
                   </Button>
                 </Space>
               </div>
