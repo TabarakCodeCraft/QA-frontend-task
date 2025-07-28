@@ -1,4 +1,5 @@
 # User Management System
+## Quick Setup
 A full-stack web application for managing users with authentication, CRUD operations, and role-based access control.
 🚀 Features 
 Frontend (React)
@@ -19,49 +20,9 @@ Ant Design - UI component library
 Tailwind CSS - Utility-first CSS framework
 dayjs - Date manipulation library
 
-📂 Project Structure
-user-management-system/
-├── backend/
-│   ├── server.js              # Main server file
-│   └── package.json           # Backend dependencies
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   │   ├── homePage.jsx   # Main dashboard
-│   │   │   ├── loginPage.jsx  # Authentication page
-│   │   │   └── userFormPage.jsx # User creation/editing
-│   │   ├── services/
-│   │   │   └── api.js         # API service layer
-│   │   └── App.jsx            # Main application component
-│   └── package.json           # Frontend dependencies
-└── README.md
-🔧 Installation & Setup
-Prerequisites
-
 Node.js (v14 or higher)
 npm or yarn package manager
 
-Backend Setup
-
-Clone the repository
-bashgit clone <repository-url>
-cd user-management-system/backend
-
-Install dependencies
-bashnpm install
-
-Environment Variables
-Create a .env file in the backend directory:
-envPORT=3000
-JWT_SECRET=your-super-secret-jwt-key
-NODE_ENV=development
-
-Start the server
-bashnpm start
-The API will be available at http://localhost:3000
-
-Frontend Setup
 
 Navigate to frontend directory
 bashcd ../frontend
@@ -71,7 +32,7 @@ bashnpm install
 
 Start the development server
 bashnpm start
-The application will be available at http://localhost:3001
+The application will be available at https://qa-frontend-task-production.up.railway.app/
 
 🔑 API Endpoints
 Authentication
