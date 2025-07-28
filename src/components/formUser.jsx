@@ -125,16 +125,13 @@ const UserForm = ({
 
   return (
     <div className="h-screen bg-gradient-to-br from-indigo-100 via-white to-cyan-100 flex items-center justify-center p-6 overflow-hidden">
-      {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-yellow-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
       </div>
 
-      {/* Form Card */}
       <div className="relative w-full max-w-5xl h-full max-h-[95vh] flex flex-col">
         <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 flex flex-col h-full">
-          {/* Header - Fixed */}
           <div className="text-center space-y-3 flex-shrink-0 mb-8">
             <div className="w-20 h-20 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center shadow-md">
               {editingUser ? (
@@ -153,7 +150,6 @@ const UserForm = ({
             </p>
           </div>
 
-          {/* Scrollable Form Content */}
           <div className="flex-1 overflow-y-auto pr-3 scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-gray-100 hover:scrollbar-thumb-gray-400">
             <Form
               form={form}
@@ -162,7 +158,6 @@ const UserForm = ({
               size="large"
               className="space-y-8"
             >
-              {/* Basic Information */}
               <div className="bg-gray-50/50 rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-3 text-gray-800 font-semibold text-lg">
                   <UserOutlined className="text-indigo-500 text-xl" />
@@ -261,7 +256,6 @@ const UserForm = ({
                 </Row>
               </div>
 
-              {/* Professional Information */}
               <div className="bg-gray-50/50 rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-3 text-gray-800 font-semibold text-lg">
                   <BankOutlined className="text-green-600 text-xl" />
@@ -343,7 +337,6 @@ const UserForm = ({
                 </Row>
               </div>
 
-              {/* Contact Information */}
               <div className="bg-gray-50/50 rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-3 text-gray-800 font-semibold text-lg">
                   <PhoneOutlined className="text-orange-600 text-xl" />
@@ -393,7 +386,6 @@ const UserForm = ({
                 </Form.Item>
               </div>
 
-              {/* Emergency Contact */}
               <div className="bg-gray-50/50 rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-3 text-gray-800 font-semibold text-lg">
                   <ContactsOutlined className="text-red-600 text-xl" />
@@ -446,7 +438,6 @@ const UserForm = ({
                 </Row>
               </div>
 
-              {/* Skills */}
               <div className="bg-gray-50/50 rounded-2xl p-6 space-y-6">
                 <div className="flex items-center gap-3 text-gray-800 font-semibold text-lg">
                   <span className="text-2xl">💼</span>
@@ -462,7 +453,6 @@ const UserForm = ({
                 </Form.Item>
               </div>
 
-              {/* Action Buttons */}
               <div className="text-center pt-8 border-t border-gray-200/50">
                 <Space size="large">
                   <Button

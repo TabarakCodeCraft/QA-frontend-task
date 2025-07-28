@@ -1,5 +1,7 @@
 class ApiService {
+    // constructor(baseURL = 'http://localhost:3000'
     constructor(baseURL = 'https://qa-api-task-production.up.railway.app'
+
 
     ) {
         this.baseURL = baseURL;
@@ -10,7 +12,7 @@ class ApiService {
         this.token = token;
         localStorage.setItem('authToken', token);
     }
-//test
+
     clearToken() {
         this.token = null;
         localStorage.removeItem('authToken');

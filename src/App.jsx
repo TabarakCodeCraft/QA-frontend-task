@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
-import HomePage from "./home";
-import LoginPage from "./login";
-import UserFormPage from "./pages/UserFormPage";
+import HomePage from "./pages/homePage.jsx";
+import LoginPage from "./pages/loginPage.jsx";
+import UserFormPage from "./pages/userFormPage.jsx";
 import apiService from "./services/api.js";
 
 const App = () => {

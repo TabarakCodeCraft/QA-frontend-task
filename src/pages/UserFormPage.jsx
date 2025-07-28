@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
-import UserForm from "../../src/components/UserForm";
+import UserForm from "../components/formUser";
 import apiService from "../services/api";
 
 const UserFormPage = () => {

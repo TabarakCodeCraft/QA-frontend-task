@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { LogIn, Mail } from "lucide-react";
-import apiService from "./services/api.js";
+import apiService from "../services/api.js";
 
 const LoginPage = ({ onLoginSuccess }) => {
   const [email, setEmail] = useState("");
@@ -34,16 +34,13 @@ const LoginPage = ({ onLoginSuccess }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-indigo-100 via-white to-cyan-100 flex items-center justify-center p-4">
-      {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-purple-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-yellow-400 to-pink-400 rounded-full mix-blend-multiply filter blur-xl opacity-20 animate-pulse"></div>
       </div>
 
-      {/* Login Card */}
       <div className="relative w-full max-w-md">
         <div className="bg-white/80 backdrop-blur-lg rounded-3xl shadow-2xl border border-white/20 p-8 space-y-8">
-          {/* Header */}
           <div className="text-center space-y-2">
             <div className="w-16 h-16 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-2xl mx-auto mb-4 flex items-center justify-center">
               <svg
@@ -68,9 +65,7 @@ const LoginPage = ({ onLoginSuccess }) => {
             </p>
           </div>
 
-          {/* Login Form */}
           <div className="space-y-6">
-            {/* Email Field */}
             <div className="space-y-2">
               <label
                 htmlFor="email"
@@ -90,7 +85,6 @@ const LoginPage = ({ onLoginSuccess }) => {
               />
             </div>
 
-            {/* Password Field */}
             <div className="space-y-2">
               <label
                 htmlFor="password"
@@ -122,7 +116,6 @@ const LoginPage = ({ onLoginSuccess }) => {
               />
             </div>
 
-            {/* Error Message */}
             {error && (
               <div className="bg-red-50 border border-red-200 rounded-xl p-3 flex items-center gap-2 text-red-600 text-sm">
                 <svg
@@ -142,7 +135,6 @@ const LoginPage = ({ onLoginSuccess }) => {
               </div>
             )}
 
-            {/* Login Button */}
             <button
               type="button"
               onClick={handleLogin}

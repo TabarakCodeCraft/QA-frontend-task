@@ -39,7 +39,7 @@ import {
   ArrowRightOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
-import apiService from "./services/api.js";
+import apiService from "../services/api.js";
 
 const { Text, Title } = Typography;
 const { Search } = Input;
@@ -86,7 +86,6 @@ const HomePage = ({ onLogout, token, currentUser }) => {
         limit: pageSize.toString(),
       };
 
-      // إضافة filters فقط إذا كانت لها قيمة
       if (searchFilters.role && searchFilters.role !== "null") {
         params.role = searchFilters.role;
       }
@@ -326,12 +325,10 @@ const HomePage = ({ onLogout, token, currentUser }) => {
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 p-6">
-      {/* Background decoration */}
       <div className="absolute inset-0 overflow-hidden">
         <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
         <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-gray-100 to-slate-100 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
       </div>
-      {/* Header */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
         <Row justify="space-between" align="middle">
           <Col>
@@ -359,7 +356,6 @@ const HomePage = ({ onLogout, token, currentUser }) => {
         </Row>
       </div>
 
-      {/* Statistics Cards */}
       {Object.keys(stats).length > 0 && (
         <Row gutter={16} className="mb-8">
           <Col xs={24} sm={12} md={6}>
@@ -405,8 +401,6 @@ const HomePage = ({ onLogout, token, currentUser }) => {
           </Col>
         </Row>
       )}
-
-      {/* Main Content */}
       <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
         <Row
           justify="space-between"
@@ -457,7 +451,6 @@ const HomePage = ({ onLogout, token, currentUser }) => {
         />
       </div>
 
-      {/* User Details Drawer */}
       <Drawer
         title="User Details"
         placement="right"
