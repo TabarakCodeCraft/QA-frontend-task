@@ -5,9 +5,6 @@ import {
   Tag,
   Space,
   Card,
-  Statistic,
-  Row,
-  Col,
   message,
   Popconfirm,
   Avatar,
@@ -17,8 +14,6 @@ import {
   Badge,
   Typography,
   Input,
-  Spin,
-  Divider,
 } from "antd";
 import {
   UserOutlined,
@@ -27,7 +22,6 @@ import {
   DeleteOutlined,
   EyeOutlined,
   LogoutOutlined,
-  SearchOutlined,
   TeamOutlined,
   MailOutlined,
   PhoneOutlined,
@@ -36,7 +30,6 @@ import {
   DollarOutlined,
   BankOutlined,
   ContactsOutlined,
-  ArrowRightOutlined,
 } from "@ant-design/icons";
 import { useNavigate } from "react-router-dom";
 import apiService from "../services/api.js";
@@ -180,15 +173,19 @@ const HomePage = ({ onLogout, token, currentUser }) => {
 
   const columns = [
     {
-      title: "Avatar",
+      title: "",
       dataIndex: "name",
       key: "avatar",
       width: 60,
+      responsive: ["md"],
       render: (name) => (
         <Avatar
           size="large"
           icon={<UserOutlined />}
-          style={{ backgroundColor: "#1890ff" }}
+          style={{
+            backgroundColor: "#3b82f6",
+            border: "2px solid #e5e7eb",
+          }}
         >
           {name?.charAt(0)?.toUpperCase()}
         </Avatar>
@@ -199,16 +196,41 @@ const HomePage = ({ onLogout, token, currentUser }) => {
       dataIndex: "name",
       key: "name",
       sorter: true,
-      render: (name) => <Text strong>{name}</Text>,
+      render: (name, record) => (
+        <div className="flex items-center space-x-3">
+          <Avatar
+            size="default"
+            icon={<UserOutlined />}
+            className="md:hidden"
+            style={{
+              backgroundColor: "#3b82f6",
+              border: "1px solid #e5e7eb",
+            }}
+          >
+            {name?.charAt(0)?.toUpperCase()}
+          </Avatar>
+          <div>
+            <Text strong className="text-gray-900">
+              {name}
+            </Text>
+            <div className="md:hidden text-xs text-gray-500 mt-1">
+              {record.email}
+            </div>
+          </div>
+        </div>
+      ),
     },
     {
       title: "Email",
       dataIndex: "email",
       key: "email",
+      responsive: ["md"],
       render: (email) => (
         <Space>
-          <MailOutlined style={{ color: "#1890ff" }} />
-          <Text copyable>{email}</Text>
+          <MailOutlined style={{ color: "#3b82f6" }} />
+          <Text copyable className="text-gray-700">
+            {email}
+          </Text>
         </Space>
       ),
     },
@@ -223,67 +245,85 @@ const HomePage = ({ onLogout, token, currentUser }) => {
         { text: "Employee", value: "employee" },
       ],
       render: (role) => (
-        <Tag color={getRoleColor(role)}>{role?.toUpperCase()}</Tag>
+        <Tag
+          color={getRoleColor(role)}
+          className="font-medium px-2 py-1 rounded-md"
+        >
+          {role?.toUpperCase()}
+        </Tag>
       ),
     },
     {
       title: "Position",
       dataIndex: "position",
       key: "position",
-      render: (position) => <Text>{position}</Text>,
+      responsive: ["lg"],
+      render: (position) => <Text className="text-gray-700">{position}</Text>,
     },
     {
       title: "Department",
       dataIndex: "department",
       key: "department",
-      render: (department) => <Text>{department}</Text>,
+      responsive: ["lg"],
+      render: (department) => (
+        <Text className="text-gray-700">{department}</Text>
+      ),
     },
     {
       title: "Salary",
       dataIndex: "salary",
       key: "salary",
+      responsive: ["xl"],
       render: (salary) =>
         salary ? (
           <Space>
-            <DollarOutlined style={{ color: "#52c41a" }} />
-            <Text>{salary.toLocaleString()}</Text>
+            <DollarOutlined style={{ color: "#10b981" }} />
+            <Text className="font-medium text-gray-900">
+              {salary.toLocaleString()}
+            </Text>
           </Space>
         ) : (
-          "-"
+          <Text className="text-gray-400">-</Text>
         ),
     },
     {
       title: "Status",
       dataIndex: "isActive",
       key: "status",
+      responsive: ["sm"],
       render: (isActive) => (
         <Badge
           status={isActive ? "success" : "error"}
-          text={isActive ? "Active" : "Inactive"}
+          text={
+            <span className={isActive ? "text-green-600" : "text-red-600"}>
+              {isActive ? "Active" : "Inactive"}
+            </span>
+          }
         />
       ),
     },
     {
       title: "Actions",
       key: "actions",
-      width: 150,
+      width: 120,
       render: (_, record) => (
-        <Space>
+        <Space size={4}>
           <Tooltip title="View Details">
             <Button
-              type="primary"
-              ghost
+              type="text"
               size="small"
               icon={<EyeOutlined />}
               onClick={() => handleViewUser(record)}
+              className="hover:bg-blue-50 hover:text-blue-600 rounded-md"
             />
           </Tooltip>
           <Tooltip title="Edit User">
             <Button
-              type="default"
+              type="text"
               size="small"
               icon={<EditOutlined />}
               onClick={() => handleEditUser(record)}
+              className="hover:bg-gray-50 hover:text-gray-700 rounded-md"
             />
           </Tooltip>
           {currentUser?.role === "admin" && (
@@ -296,24 +336,25 @@ const HomePage = ({ onLogout, token, currentUser }) => {
                 okType="danger"
                 okButtonProps={{
                   style: {
-                    backgroundColor: "#ff4d4f",
-                    borderColor: "#ff4d4f",
+                    backgroundColor: "#ef4444",
+                    borderColor: "#ef4444",
                     color: "white",
                   },
                 }}
                 cancelButtonProps={{
                   style: {
-                    borderColor: "#d9d9d9",
-                    color: "#595959",
+                    borderColor: "#d1d5db",
+                    color: "#6b7280",
                   },
                 }}
                 placement="topRight"
               >
                 <Button
-                  type="primary"
+                  type="text"
                   danger
                   size="small"
                   icon={<DeleteOutlined />}
+                  className="hover:bg-red-50 hover:text-red-600 rounded-md"
                 />
               </Popconfirm>
             </Tooltip>
@@ -324,259 +365,415 @@ const HomePage = ({ onLogout, token, currentUser }) => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-white to-gray-50 p-6">
-      <div className="absolute inset-0 overflow-hidden">
-        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-100 to-indigo-100 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
-        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-gray-100 to-slate-100 rounded-full mix-blend-multiply filter blur-xl opacity-30"></div>
+    <div className="min-h-screen bg-gradient-to-br from-slate-50 via-blue-50/30 to-indigo-50/50">
+      <div className="fixed inset-0 overflow-hidden pointer-events-none">
+        <div className="absolute -top-40 -right-40 w-80 h-80 bg-gradient-to-r from-blue-400/20 to-indigo-400/20 rounded-full filter blur-3xl"></div>
+        <div className="absolute -bottom-40 -left-40 w-80 h-80 bg-gradient-to-r from-violet-400/20 to-purple-400/20 rounded-full filter blur-3xl"></div>
       </div>
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8 mb-8">
-        <Row justify="space-between" align="middle">
-          <Col>
-            <Space>
-              <TeamOutlined style={{ fontSize: "24px", color: "#1890ff" }} />
-              <Title level={2} style={{ margin: 0 }}>
-                User Management System
-              </Title>
-            </Space>
-          </Col>
-          <Col>
-            <Space>
-              <Text>Welcome, {currentUser?.name}</Text>
+
+      <div className="relative z-10 p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
+        <div className="absolute top-0 right-0 w-32 h-32 bg-gradient-to-br from-blue-400/10 to-indigo-400/10 rounded-full -translate-y-16 translate-x-16"></div>
+
+        <div className="relative bg-gradient-to-r from-white via-blue-50/50 to-indigo-50/30 backdrop-blur-sm rounded-2xl sm:rounded-3xl shadow-xl sm:shadow-2xl border border-white/30 p-4 sm:p-8 mb-6 sm:mb-8 overflow-hidden">
+          <div className="absolute top-0 right-0 w-20 sm:w-32 h-20 sm:h-32 bg-gradient-to-br from-blue-400/10 to-indigo-400/10 rounded-full -translate-y-8 sm:-translate-y-16 translate-x-8 sm:translate-x-16"></div>
+          <div className="absolute bottom-0 left-0 w-16 sm:w-24 h-16 sm:h-24 bg-gradient-to-tr from-violet-400/10 to-purple-400/10 rounded-full translate-y-8 sm:translate-y-12 -translate-x-8 sm:-translate-x-12"></div>
+
+          <div className="relative z-10 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-6">
+            <div className="flex items-center space-x-3 sm:space-x-4">
+              <div className="relative">
+                <div className="absolute inset-0 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl blur-lg opacity-30"></div>
+                <div className="relative p-3 sm:p-4 bg-gradient-to-r from-blue-600 to-indigo-600 rounded-xl sm:rounded-2xl shadow-xl">
+                  <TeamOutlined className="text-white text-xl sm:text-2xl" />
+                </div>
+              </div>
+              <div>
+                <Title
+                  level={3}
+                  className="!mb-1 !text-gray-900 !font-bold text-lg sm:text-2xl"
+                >
+                  User Management System
+                </Title>
+                <Text className="text-gray-600 text-sm sm:text-base font-medium">
+                  Manage your team efficiently
+                </Text>
+              </div>
+            </div>
+            <div className="flex items-center space-x-4 sm:space-x-6 w-full sm:w-auto justify-between sm:justify-end">
+              <div className="text-left sm:text-right">
+                <Text className="text-gray-500 text-xs sm:text-sm font-medium block">
+                  Welcome back,
+                </Text>
+                <Text strong className="text-gray-900 text-sm sm:text-lg">
+                  {currentUser?.name}
+                </Text>
+              </div>
               <Button
                 type="primary"
                 danger
                 icon={<LogoutOutlined />}
                 onClick={onLogout}
-                style={{ borderRadius: "8px" }}
+                className="rounded-xl sm:rounded-2xl px-4 sm:px-8 h-10 sm:h-12 shadow-xl hover:shadow-2xl transition-all duration-300 transform hover:-translate-y-0.5 bg-gradient-to-r from-red-500 to-red-600 border-0 font-medium"
               >
-                Logout
+                <span className="hidden sm:inline ml-1">Logout</span>
               </Button>
-            </Space>
-          </Col>
-        </Row>
-      </div>
+            </div>
+          </div>
+        </div>
 
-      {Object.keys(stats).length > 0 && (
-        <Row gutter={16} className="mb-8">
-          <Col xs={24} sm={12} md={6}>
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 text-center">
-              <Statistic
-                title="Total Users"
-                value={stats.totalUsers || 0}
-                prefix={<TeamOutlined style={{ color: "#1890ff" }} />}
-                valueStyle={{ color: "#1890ff" }}
-              />
-            </div>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 text-center">
-              <Statistic
-                title="Average Age"
-                value={stats.averageAge || 0}
-                suffix="years"
-                prefix={<UserOutlined style={{ color: "#52c41a" }} />}
-                valueStyle={{ color: "#52c41a" }}
-              />
-            </div>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 text-center">
-              <Statistic
-                title="Average Salary"
-                value={stats.averageSalary || 0}
-                prefix={<DollarOutlined style={{ color: "#fa8c16" }} />}
-                valueStyle={{ color: "#fa8c16" }}
-              />
-            </div>
-          </Col>
-          <Col xs={24} sm={12} md={6}>
-            <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-6 text-center">
-              <Statistic
-                title="Departments"
-                value={stats.departments || 0}
-                prefix={<BankOutlined style={{ color: "#722ed1" }} />}
-                valueStyle={{ color: "#722ed1" }}
-              />
-            </div>
-          </Col>
-        </Row>
-      )}
-      <div className="bg-white rounded-2xl shadow-lg border border-gray-200 p-8">
-        <Row
-          justify="space-between"
-          align="middle"
-          style={{ marginBottom: 16 }}
-        >
-          <Col>
-            <Title level={4} style={{ margin: 0 }}>
-              Users List
-            </Title>
-          </Col>
-          <Col>
-            <Space>
-              <Search
-                placeholder="Search users..."
-                onSearch={handleSearch}
-                style={{ width: 300 }}
-                allowClear
-              />
-              <Button
-                type="primary"
-                icon={<PlusOutlined />}
-                onClick={handleAddUser}
-                className="rounded-lg bg-blue-600 border-0 hover:bg-blue-700"
-              >
-                Add User
-              </Button>
-            </Space>
-          </Col>
-        </Row>
+        {Object.keys(stats).length > 0 && (
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 mb-8">
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-gray-600 text-sm font-medium">
+                    Total Users
+                  </Text>
+                  <div className="text-2xl font-bold text-blue-600 mt-1">
+                    {stats.totalUsers || 0}
+                  </div>
+                </div>
+                <div className="p-3 bg-blue-100 rounded-xl">
+                  <TeamOutlined className="text-blue-600 text-xl" />
+                </div>
+              </div>
+            </Card>
 
-        <Table
-          columns={columns}
-          dataSource={users}
-          rowKey="id"
-          loading={loading}
-          pagination={{
-            current: pagination.current,
-            pageSize: pagination.pageSize,
-            total: pagination.total,
-            showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total, range) =>
-              `${range[0]}-${range[1]} of ${total} users`,
-          }}
-          onChange={handleTableChange}
-          scroll={{ x: 1200 }}
-        />
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-gray-600 text-sm font-medium">
+                    Average Age
+                  </Text>
+                  <div className="text-2xl font-bold text-green-600 mt-1">
+                    {stats.averageAge || 0}{" "}
+                    <span className="text-sm font-normal">years</span>
+                  </div>
+                </div>
+                <div className="p-3 bg-green-100 rounded-xl">
+                  <UserOutlined className="text-green-600 text-xl" />
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-gray-600 text-sm font-medium">
+                    Average Salary
+                  </Text>
+                  <div className="text-2xl font-bold text-orange-600 mt-1">
+                    ${(stats.averageSalary || 0).toLocaleString()}
+                  </div>
+                </div>
+                <div className="p-3 bg-orange-100 rounded-xl">
+                  <DollarOutlined className="text-orange-600 text-xl" />
+                </div>
+              </div>
+            </Card>
+
+            <Card className="bg-white/80 backdrop-blur-sm border-0 shadow-xl rounded-2xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1">
+              <div className="flex items-center justify-between">
+                <div>
+                  <Text className="text-gray-600 text-sm font-medium">
+                    Departments
+                  </Text>
+                  <div className="text-2xl font-bold text-purple-600 mt-1">
+                    {stats.departments || 0}
+                  </div>
+                </div>
+                <div className="p-3 bg-purple-100 rounded-xl">
+                  <BankOutlined className="text-purple-600 text-xl" />
+                </div>
+              </div>
+            </Card>
+          </div>
+        )}
+
+        <div className="bg-white/80 backdrop-blur-sm rounded-2xl shadow-xl border border-white/20 overflow-hidden">
+          <div className="p-6 sm:p-8 border-b border-gray-100">
+            <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <div>
+                <Title level={4} className="!mb-1 !text-gray-900">
+                  Users List
+                </Title>
+                <Text className="text-gray-600 text-sm">
+                  {pagination.total} total users
+                </Text>
+              </div>
+              <div className="flex flex-col sm:flex-row gap-3 w-full sm:w-auto">
+                <Search
+                  placeholder="Search users..."
+                  onSearch={handleSearch}
+                  className="w-full sm:w-80"
+                  allowClear
+                  size="large"
+                />
+                <Button
+                  type="primary"
+                  icon={<PlusOutlined />}
+                  onClick={handleAddUser}
+                  size="large"
+                  className="rounded-xl px-6 bg-blue-600 border-0 hover:bg-blue-700 shadow-lg hover:shadow-xl transition-all duration-200 w-full sm:w-auto"
+                >
+                  Add User
+                </Button>
+              </div>
+            </div>
+          </div>
+
+          <div className="overflow-x-auto">
+            <Table
+              columns={columns}
+              dataSource={users}
+              rowKey="id"
+              loading={loading}
+              pagination={{
+                current: pagination.current,
+                pageSize: pagination.pageSize,
+                total: pagination.total,
+                showSizeChanger: true,
+                showQuickJumper: true,
+                showTotal: (total, range) =>
+                  `${range[0]}-${range[1]} of ${total} users`,
+                responsive: true,
+              }}
+              onChange={handleTableChange}
+              scroll={{ x: 800 }}
+              className="custom-table"
+              rowClassName="hover:bg-gray-50/50 transition-colors duration-200"
+            />
+          </div>
+        </div>
       </div>
 
       <Drawer
-        title="User Details"
+        title={
+          <div className="text-lg font-semibold text-gray-900">
+            User Details
+          </div>
+        }
         placement="right"
         onClose={() => setDrawerVisible(false)}
         open={drawerVisible}
-        width={600}
+        width={window.innerWidth < 768 ? "100%" : 600}
+        className="user-drawer"
       >
         {selectedUser && (
-          <div>
-            <div style={{ textAlign: "center", marginBottom: 24 }}>
+          <div className="space-y-6">
+            <div className="text-center p-6 bg-gradient-to-r from-blue-50 to-indigo-50 rounded-2xl">
               <Avatar
                 size={80}
                 icon={<UserOutlined />}
-                style={{ backgroundColor: "#1890ff" }}
+                style={{
+                  backgroundColor: "#3b82f6",
+                  border: "3px solid white",
+                  boxShadow: "0 4px 12px rgba(59, 130, 246, 0.3)",
+                }}
               >
                 {selectedUser.name?.charAt(0)?.toUpperCase()}
               </Avatar>
-              <Title level={3} style={{ marginTop: 16, marginBottom: 8 }}>
+              <Title level={3} className="!mt-4 !mb-2 !text-gray-900">
                 {selectedUser.name}
               </Title>
               <Tag
                 color={getRoleColor(selectedUser.role)}
-                style={{ fontSize: "14px", padding: "4px 12px" }}
+                className="px-3 py-1 text-sm font-medium rounded-lg"
               >
                 {selectedUser.role?.toUpperCase()}
               </Tag>
             </div>
 
-            <Descriptions bordered column={1}>
-              <Descriptions.Item label="Email">
-                <Space>
-                  <MailOutlined />
-                  <Text copyable>{selectedUser.email}</Text>
-                </Space>
-              </Descriptions.Item>
-              {selectedUser.age && (
-                <Descriptions.Item label="Age">
-                  {selectedUser.age} years
-                </Descriptions.Item>
-              )}
-              {selectedUser.position && (
-                <Descriptions.Item label="Position">
-                  {selectedUser.position}
-                </Descriptions.Item>
-              )}
-              {selectedUser.department && (
-                <Descriptions.Item label="Department">
-                  {selectedUser.department}
-                </Descriptions.Item>
-              )}
-              {selectedUser.salary && (
-                <Descriptions.Item label="Salary">
+            <div className="bg-gray-50 rounded-2xl p-6">
+              <Descriptions
+                bordered
+                column={1}
+                size="middle"
+                className="custom-descriptions"
+              >
+                <Descriptions.Item
+                  label={
+                    <span className="font-medium text-gray-700">Email</span>
+                  }
+                >
                   <Space>
-                    <DollarOutlined />
-                    <Text>{selectedUser.salary.toLocaleString()}</Text>
+                    <MailOutlined className="text-blue-600" />
+                    <Text copyable className="text-gray-900">
+                      {selectedUser.email}
+                    </Text>
                   </Space>
                 </Descriptions.Item>
-              )}
-              {selectedUser.phoneNumber && (
-                <Descriptions.Item label="Phone">
-                  <Space>
-                    <PhoneOutlined />
-                    <Text>{selectedUser.phoneNumber}</Text>
-                  </Space>
-                </Descriptions.Item>
-              )}
-              {selectedUser.address && (
-                <Descriptions.Item label="Address">
-                  <Space>
-                    <HomeOutlined />
-                    <Text>{selectedUser.address}</Text>
-                  </Space>
-                </Descriptions.Item>
-              )}
-              {selectedUser.hireDate && (
-                <Descriptions.Item label="Hire Date">
-                  <Space>
-                    <CalendarOutlined />
-                    <Text>{selectedUser.hireDate}</Text>
-                  </Space>
-                </Descriptions.Item>
-              )}
-              {selectedUser.skills && selectedUser.skills.length > 0 && (
-                <Descriptions.Item label="Skills">
-                  <Space wrap>
-                    {selectedUser.skills.map((skill, index) => (
-                      <Tag key={index} color="blue">
-                        {skill}
-                      </Tag>
-                    ))}
-                  </Space>
-                </Descriptions.Item>
-              )}
-            </Descriptions>
+                {selectedUser.age && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">Age</span>
+                    }
+                  >
+                    <Text className="text-gray-900">
+                      {selectedUser.age} years
+                    </Text>
+                  </Descriptions.Item>
+                )}
+                {selectedUser.position && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">
+                        Position
+                      </span>
+                    }
+                  >
+                    <Text className="text-gray-900">
+                      {selectedUser.position}
+                    </Text>
+                  </Descriptions.Item>
+                )}
+                {selectedUser.department && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">
+                        Department
+                      </span>
+                    }
+                  >
+                    <Text className="text-gray-900">
+                      {selectedUser.department}
+                    </Text>
+                  </Descriptions.Item>
+                )}
+                {selectedUser.salary && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">Salary</span>
+                    }
+                  >
+                    <Space>
+                      <DollarOutlined className="text-green-600" />
+                      <Text className="text-gray-900 font-medium">
+                        ${selectedUser.salary.toLocaleString()}
+                      </Text>
+                    </Space>
+                  </Descriptions.Item>
+                )}
+                {selectedUser.phoneNumber && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">Phone</span>
+                    }
+                  >
+                    <Space>
+                      <PhoneOutlined className="text-blue-600" />
+                      <Text className="text-gray-900">
+                        {selectedUser.phoneNumber}
+                      </Text>
+                    </Space>
+                  </Descriptions.Item>
+                )}
+                {selectedUser.address && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">Address</span>
+                    }
+                  >
+                    <Space align="start">
+                      <HomeOutlined className="text-blue-600 mt-1" />
+                      <Text className="text-gray-900">
+                        {selectedUser.address}
+                      </Text>
+                    </Space>
+                  </Descriptions.Item>
+                )}
+                {selectedUser.hireDate && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">
+                        Hire Date
+                      </span>
+                    }
+                  >
+                    <Space>
+                      <CalendarOutlined className="text-blue-600" />
+                      <Text className="text-gray-900">
+                        {selectedUser.hireDate}
+                      </Text>
+                    </Space>
+                  </Descriptions.Item>
+                )}
+                {selectedUser.skills && selectedUser.skills.length > 0 && (
+                  <Descriptions.Item
+                    label={
+                      <span className="font-medium text-gray-700">Skills</span>
+                    }
+                  >
+                    <div className="flex flex-wrap gap-2">
+                      {selectedUser.skills.map((skill, index) => (
+                        <Tag key={index} color="blue" className="rounded-md">
+                          {skill}
+                        </Tag>
+                      ))}
+                    </div>
+                  </Descriptions.Item>
+                )}
+              </Descriptions>
+            </div>
 
             {selectedUser.emergencyContact && (
-              <>
-                <Divider orientation="left">Emergency Contact</Divider>
-                <Descriptions bordered column={1}>
+              <div className="bg-red-50 rounded-2xl p-6">
+                <div className="flex items-center space-x-2 mb-4">
+                  <ContactsOutlined className="text-red-600" />
+                  <Title level={5} className="!mb-0 !text-red-800">
+                    Emergency Contact
+                  </Title>
+                </div>
+                <Descriptions
+                  bordered
+                  column={1}
+                  size="middle"
+                  className="custom-descriptions"
+                >
                   {selectedUser.emergencyContact.name && (
-                    <Descriptions.Item label="Name">
-                      <Space>
-                        <ContactsOutlined />
-                        <Text>{selectedUser.emergencyContact.name}</Text>
-                      </Space>
+                    <Descriptions.Item
+                      label={
+                        <span className="font-medium text-gray-700">Name</span>
+                      }
+                    >
+                      <Text className="text-gray-900">
+                        {selectedUser.emergencyContact.name}
+                      </Text>
                     </Descriptions.Item>
                   )}
                   {selectedUser.emergencyContact.phone && (
-                    <Descriptions.Item label="Phone">
+                    <Descriptions.Item
+                      label={
+                        <span className="font-medium text-gray-700">Phone</span>
+                      }
+                    >
                       <Space>
-                        <PhoneOutlined />
-                        <Text>{selectedUser.emergencyContact.phone}</Text>
+                        <PhoneOutlined className="text-red-600" />
+                        <Text className="text-gray-900">
+                          {selectedUser.emergencyContact.phone}
+                        </Text>
                       </Space>
                     </Descriptions.Item>
                   )}
                   {selectedUser.emergencyContact.relationship && (
-                    <Descriptions.Item label="Relationship">
-                      <Text>{selectedUser.emergencyContact.relationship}</Text>
+                    <Descriptions.Item
+                      label={
+                        <span className="font-medium text-gray-700">
+                          Relationship
+                        </span>
+                      }
+                    >
+                      <Text className="text-gray-900">
+                        {selectedUser.emergencyContact.relationship}
+                      </Text>
                     </Descriptions.Item>
                   )}
                 </Descriptions>
-              </>
+              </div>
             )}
           </div>
         )}
       </Drawer>
+ 
     </div>
   );
 };
