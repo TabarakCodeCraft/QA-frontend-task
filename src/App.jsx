@@ -30,7 +30,6 @@ const App = () => {
     }
   };
 
-  // Function to clear authentication data
   const clearAuthData = () => {
     setAuthToken(null);
     setCurrentUser(null);
